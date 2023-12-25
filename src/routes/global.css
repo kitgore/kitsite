@@ -1,0 +1,43 @@
+
+@font-face {
+  font-family: 'perfectDOS';
+  src: url('perfectDOS.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: black;
+    color: white;
+    font-family: 'perfectDOS', monospace;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Terminal Text Container */
+.terminal {
+    width: 80vw; /* Use viewport width (vw) for responsive sizing */
+    height: 80vh; /* Use viewport height (vh) for responsive sizing */
+    border: 3px solid white;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: hidden; /* Change to hidden if you don't want scrolling */
+    position: relative;
+    z-index: 2; /* On top of the blurred copy */
+    filter: url(#fisheye-filter);
+}
+
+.glowtext {
+    color: #fff;
+    text-shadow: 
+      0px 0 8px rgb(165, 183, 243);
+  }
+  
+
+/* Additional styles can be added as needed */
