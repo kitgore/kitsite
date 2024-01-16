@@ -33,7 +33,7 @@
 <div id="content-container">
     <div class="terminal glowtext">
         <p>Welcome to my resume site!</p>
-        <p>This is a test of the "SUPERHOT" console-like interface.</p>
+        <p>Div Test</p>
         <!-- More test text or elements can go here -->
     </div>
     <!-- <img src="coda.png", style="filter: url(#fisheye-filter);"/> -->
