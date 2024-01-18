@@ -32,7 +32,6 @@
   
 <div id="content-container">
     <div class="terminal glowtext">
-        <p>Welcome to my resume site!</p>
         <p>Div Test</p>
         <!-- More test text or elements can go here -->
     </div>
