@@ -20,17 +20,20 @@ body {
     height: 100vh;
 }
 
+.content-container{
+  filter: url(#fisheye-effect);
+}
+
 /* Terminal Text Container */
 .terminal {
     width: 80vw; /* Use viewport width (vw) for responsive sizing */
     height: 80vh; /* Use viewport height (vh) for responsive sizing */
     border: 3px solid white;
-    padding: 20px;
+    padding: 0px;
     box-sizing: border-box;
     overflow-y: hidden; /* Change to hidden if you don't want scrolling */
     position: relative;
     z-index: 2; /* On top of the blurred copy */
-    filter: url(#fisheye-filter);
 }
 
 .glowtext {
