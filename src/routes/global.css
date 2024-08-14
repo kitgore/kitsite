@@ -1,9 +1,9 @@
 
 @font-face {
-  font-family: 'perfectDOS';
-  src: url('perfectDOS.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'perfectDOS';
+	src: url('perfectDOS.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
 }
 
 body {
@@ -18,16 +18,26 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+	filter: url(#motion-blur-filter)
 }
 
-.content-container{
-  filter: url(#fisheye-effect);
+.link {
+    color: white; /* Initial text color */
+    text-decoration: none; /* Remove underline */
+    transition: all 0s ease-out; /* Smooth transition */
+}
+
+.link:hover {
+	color: black; /* Text color on hover */
+  	background-color: rgb(240, 250, 255); /* Background color on hover */
+	  box-shadow: 
+      0 0 10px rgb(165, 183, 243);
 }
 
 /* Terminal Text Container */
 .terminal {
     width: 80vw; /* Use viewport width (vw) for responsive sizing */
-    height: 80vh; /* Use viewport height (vh) for responsive sizing */
+    height: 85vh; /* Use viewport height (vh) for responsive sizing */
     border: 3px solid white;
     padding: 0px;
     box-sizing: border-box;
@@ -39,8 +49,8 @@ body {
 .glowtext {
     color: #fff;
     text-shadow: 
-      0px 0 8px rgb(165, 183, 243);
-  }
+      0px 0 10px rgb(165, 183, 243);
+}
   
 
 /* Additional styles can be added as needed */

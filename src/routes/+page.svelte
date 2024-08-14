@@ -1,93 +1,214 @@
+<script>
+    import { onMount } from 'svelte';
+    import { browser } from '$app/environment';
+    import TwoColumnLayout from './TwoColumnLayout.svelte';
+
+    let innerHeight;
+    let innerWidth;
+    let baseFontSize = 20; // Base font size in pixels
+    let fontSizeScale;
+
+    $: if (browser) {
+        updateFilterScaling(innerHeight, innerWidth);
+        updateFontSize(innerHeight);
+    }
+
+    function updateFilterScaling(height, width) {
+        if (!browser) return;
+
+        const baseHeight = 1080; // Base height for scaling (e.g., 1080p)
+        const baseWidth = 1920;  // Base width for scaling (e.g., 1080p)
+        const scaleFactor = Math.min(height / baseHeight, width / baseWidth);
+        
+        // Update CSS custom property for general scaling
+        document.documentElement.style.setProperty('--scale-factor', scaleFactor.toString());
+
+        // Update SVG filter parameters
+        const filter = document.getElementById('motion-blur-filter');
+        if (filter) {
+            // Scale the displacement map (feImage)
+            const displacementMap = filter.querySelector('#displacement-map');
+            if (displacementMap) {
+                const mapWidth = 200 * scaleFactor;
+                const mapHeight = 200 * scaleFactor;
+                displacementMap.setAttribute('width', `${mapWidth}%`);
+                displacementMap.setAttribute('height', `${mapHeight}%`);
+                displacementMap.setAttribute('x', `-${mapWidth / 2}%`);
+                displacementMap.setAttribute('y', `-${mapHeight / 2 + 5}%`);
+            }
+
+            // Scale the displacement effect (feDisplacementMap)
+            const displacementEffect = filter.querySelector('#displacement-effect');
+            if (displacementEffect) {
+                const newScale = 35 * scaleFactor;
+                displacementEffect.setAttribute('scale', newScale.toString());
+            }
+
+            // Scale the blur effect
+            const blurEffect = filter.querySelector('#blur-effect');
+            if (blurEffect) {
+                const newBlur = `${30 * scaleFactor} ${0.2 * scaleFactor}`;
+                blurEffect.setAttribute('stdDeviation', newBlur);
+            }
+        }
+    }
+
+    function updateFontSize(height) {
+        if (!browser) return;
+
+        const baseHeight = 1080; // Base height for scaling (e.g., 1080p)
+        fontSizeScale = height / baseHeight;
+        
+        // Update CSS custom property for font size scaling
+        document.documentElement.style.setProperty('--font-size-scale', fontSizeScale.toString());
+    }
+
+    onMount(() => {
+        if (browser) {
+            const resizeObserver = new ResizeObserver(entries => {
+                for (let entry of entries) {
+                    innerHeight = entry.contentRect.height;
+                    innerWidth = entry.contentRect.width;
+                }
+            });
+
+            resizeObserver.observe(document.body);
+
+            return () => {
+                resizeObserver.disconnect();
+            };
+        }
+    });
+</script>
+
 <!-- Main HTML structure -->
 <div id="content-container">
-  <div class="terminal glowtext">
-      <pre>
-       __   ____                      
-      / /__/_/ /_____  ____  ________ 
-     / / _/ / __/ __ `/ __ \/ ___/ _ \
-    /   \/ / /_/ /_/ / /_/ / /  /  __/
-   /_/|_/_/\__/\__  /\____/_/   \___/ 
-              /____/                  
-      </pre>
+  <div class="terminal glowtext" >
+
+      <TwoColumnLayout>
+        <div slot="left">
+            <pre>
+    __   ____                      
+   / /__/_/ /_____  ____  ________ 
+  / / _/ / __/ __ `/ __ \/ ___/ _ \
+ /   \/ / /_/ /_/ / /_/ / /  /  __/
+/_/|_/_/\__/\__  /\____/_/   \___/ 
+           /____/                  
+                     
+    web developer / creative
+    
+            </pre>
+            <img src="cat.png" alt="bubble" class="bubble" /> 
+            <img src="cat.png" alt="bubble" class="bubble" />  
+            <img src="cat.png" alt="bubble" class="bubble" />   
+            <a class="link" href="#">test</a>
+            <a class="link" href="#">test</a>
+        </div>
+        <div slot="right">
+            <!-- Content for the right column -->
+            <h2>Right Column</h2>
+            <p>This is the wider column on the right side.</p>
+        </div>
+    </TwoColumnLayout>
   </div>
 </div>
 
+
+
 <!-- SVG filter definitions -->
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="position:absolute; width:0; height:0;">
-  <defs>
-      <filter id="motion-blur-filter" filterUnits="userSpaceOnUse">
-          <feOffset in="SourceGraphic" dx="30" dy="0" result="offsetRight"/>
-          <feGaussianBlur in="offsetRight" stdDeviation="15, 2" result="blurredRight" id="blurRight"/>
-          
-          <feOffset in="SourceGraphic" dx="-30" dy="0" result="offsetLeft"/>
-          <feGaussianBlur in="offsetLeft" stdDeviation="15, 2" result="blurredLeft" id="blurLeft"/>
-          
-          <feMerge result="mergedBlurs">
-              <feMergeNode in="blurredRight"/>
-              <feMergeNode in="blurredLeft"/>
-          </feMerge>
-          
-          <feColorMatrix in="mergedBlurs" type="matrix"
-              values="0.04 0   0   0   0
-                      0   0.28  0   0   0
-                      0   0   0.34  0   0
-                      0   0   0   .6   0 " result="blueTint"/>
-          
-          <feComposite in="SourceGraphic" in2="blueTint" operator="atop" />
-      </filter>
+    <defs>
+        <filter id="motion-blur-filter" x="-50%" y="-50%" width="200%" height="200%">
+            <feImage xlink:href="bubble.png" result="map" x="-50%" y="-55%" width="200%" height="200%" preserveAspectRatio="none"/>
+            <feDisplacementMap in="SourceGraphic" in2="map" scale=35 xChannelSelector="R" yChannelSelector="G" result="fisheye"/>
 
-      <filter id="fisheye-effect" x="0" y="0" width="100%" height="100%">
-        <feImage result="ripple" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAACUFjqXAAAAXklEQVR42mJgQAMWwmcYGRlmAgwbYwYGBm8RBmIC2N9DeYD2PxT4AGYDJMNgGLyMIJ5H6n+GEkTmgMwpIZAiPEYtCSaDJANoxMhAmwdzMBTEZ2ACwzgzFR7s6Il1sJZkNgAAAABJRU5ErkJggg==" />
-        <feDisplacementMap in="SourceGraphic" in2="ripple" scale="100" xChannelSelector="R" yChannelSelector="G" />
-    </filter>
-  </defs>
+            <feGaussianBlur in="fisheye" stdDeviation="30 .2" result="blur"/>
+      
+            <feColorMatrix in="blur" type="matrix" 
+            values="0.02 0   0   0   0
+                    0   0.3  0   0   0
+                    0   0    0.4 0   0
+                    0   0    0   0.4 0" result="dimBlueShift"/>
+            <feGaussianBlur in="dimBlueShift" stdDeviation="25 0" result="blurred"/>
+            <!-- <feOffset in="blurred" dx="2" dy="0" result="offsetBlur"/> -->
+            <feComposite in="blurred" in2="colored" operator="over" result="horizontalGlow"/>
+            
+            <!-- Blend glow with original -->
+            <feBlend in="fisheye" in2="horizontalGlow" mode="screen" result="finalEffect"/>
+            
+
+            <feBlend in="fisheye" in2="screenGlow" mode="screen"/>
+        </filter>
+    </defs>
 </svg>
 
-<!-- Svelte script tag with animation logic -->
-<script>
-  import { onMount } from 'svelte';
+<style>
+    @font-face {
+        font-family: 'bigBlue';
+        src: url('PrintChar21.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
 
-  onMount(() => {
-      const terminal = document.querySelector('.terminal');
-      const blurRight = document.getElementById('blurRight');
-      const blurLeft = document.getElementById('blurLeft');
-      let start;
+    :global(:root) {
+        --base-font-size: 18px;
+        --font-size-scale: 1;
+        --scale-factor: 1;
+    }
 
-      function animateBlur(timestamp) {
-          if (start === undefined) start = timestamp;
-          const elapsed = (timestamp - start) / 1000; // time in seconds
-          const stdDev = 13 + 4 * (Math.sin(elapsed)); // oscillate stdDeviation between 5 and 15
-          
-          blurRight.setAttribute('stdDeviation', `${stdDev}, ${1 + stdDev/6}`);
-          blurLeft.setAttribute('stdDeviation', `${stdDev}, ${1 + stdDev/6}`);
-          // console.log(Math.sin(elapsed) + 10);
-          requestAnimationFrame(animateBlur);
-      }
+    :global(body) {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: black;
+        color: white;
+        font-family: 'bigBlue', monospace;
+        font-size: calc(var(--base-font-size) * var(--font-size-scale));
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        filter: url(#motion-blur-filter)
+    }
 
-      requestAnimationFrame(animateBlur);
-      
-      if (terminal) {
-          // Clone the terminal
-          const blurCopy = terminal.cloneNode(true);
+    :global(pre) {
+        margin: 0;
+        padding: 0;
+        font-family: 'bigBlue', monospace;
+        font-size: calc(var(--base-font-size) * var(--font-size-scale));
+    }
 
-          // Copy computed styles
-          const computedStyle = window.getComputedStyle(terminal);
-          for (let property of computedStyle) {
-              blurCopy.style[property] = computedStyle[property];
-          }
+    .link {
+        color: white; /* Initial text color */
+        text-decoration: none; /* Remove underline */
+        transition: all 0s ease-out; /* Smooth transition */
+    }
 
-          // Apply the blur filter to the cloned copy
-          blurCopy.style.filter = 'url(#fisheye-effect)';
-          blurCopy.style.position = 'absolute';
-          blurCopy.style.zIndex = '1'; // Just below the terminal's z-index
-          blurCopy.id = 'blurred-terminal'; // Assign a new ID to avoid duplicates
+    .link:hover {
+        color: black; /* Text color on hover */
+        background-color: rgb(240, 250, 255); /* Background color on hover */
+        box-shadow: 0 0 10px rgb(165, 183, 243);
+    }
 
-          // Adjust position to account for any offsets (e.g., if terminal is not exactly centered)
-          blurCopy.style.top = terminal.offsetTop + 'px';
-          blurCopy.style.left = terminal.offsetLeft + 'px';
+    /* Terminal Text Container */
+    .terminal {
+        width: 80vw; /* Use viewport width (vw) for responsive sizing */
+        height: 85vh; /* Use viewport height (vh) for responsive sizing */
+        border: 3px solid white;
+        padding: 0px;
+        box-sizing: border-box;
+        overflow-y: hidden; /* Change to hidden if you don't want scrolling */
+        position: relative;
+        z-index: 2; /* On top of the blurred copy */
+    }
 
-          // Insert the blurred copy behind the original terminal
-          terminal.parentNode.insertBefore(blurCopy, terminal);
-      }
-  });
-</script>
+    .glowtext {
+        color: #fff;
+        text-shadow: 0px 0 5px rgb(145, 194, 237);
+    }
+
+    .bubble {
+        width: calc(100px * var(--scale-factor));
+        height: auto;
+    }
+</style>
