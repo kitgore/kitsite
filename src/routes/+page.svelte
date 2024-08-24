@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import { browser } from '$app/environment';
-    import TwoColumnLayout from './TwoColumnLayout.svelte';
+    import TwoColumnLayout from '../components/TwoColumnLayout.svelte';
 
     let innerHeight;
     let innerWidth;
@@ -16,8 +16,8 @@
     function updateFilterScaling(height, width) {
         if (!browser) return;
 
-        const baseHeight = 1080; // Base height for scaling (e.g., 1080p)
-        const baseWidth = 1920;  // Base width for scaling (e.g., 1080p)
+        const baseHeight = 1080;
+        const baseWidth = 1920;  
         const scaleFactor = Math.min(height / baseHeight, width / baseWidth);
         
         // Update CSS custom property for general scaling
@@ -94,9 +94,18 @@
  /   \/ / /_/ /_/ / /_/ / /  /  __/
 /_/|_/_/\__/\__  /\____/_/   \___/ 
            /____/                  
-                     
-    web developer / creative
-    
+            </pre>
+            <pre class="size2">
+   developer / creative
+
+         ♥ ♦ Ü  
+     ∭ ⌛ ∞ ♡ 
+
+   about
+
+   projects 
+
+   design
             </pre>
             <img src="cat.png" alt="bubble" class="bubble" /> 
             <img src="cat.png" alt="bubble" class="bubble" />  
@@ -106,8 +115,10 @@
         </div>
         <div slot="right">
             <!-- Content for the right column -->
-            <h2>Right Column</h2>
-            <p>This is the wider column on the right side.</p>
+            <pre class="size2">
+    bruhbruh
+    bru bruhbruh bruh bruh 
+            </pre>
         </div>
     </TwoColumnLayout>
   </div>
@@ -152,6 +163,7 @@
 
     :global(:root) {
         --base-font-size: 18px;
+        --base-font-size2: 24px;
         --font-size-scale: 1;
         --scale-factor: 1;
     }
@@ -161,6 +173,7 @@
         padding: 0;
         box-sizing: border-box;
         background-color: black;
+        background-image: url("CEVnoise4.gif");
         color: white;
         font-family: 'bigBlue', monospace;
         font-size: calc(var(--base-font-size) * var(--font-size-scale));
@@ -176,6 +189,10 @@
         padding: 0;
         font-family: 'bigBlue', monospace;
         font-size: calc(var(--base-font-size) * var(--font-size-scale));
+    }
+
+    .size2{
+        font-size: calc(var(--base-font-size2) * var(--font-size-scale));
     }
 
     .link {

@@ -1,6 +1,9 @@
 <script>
     export let leftContent = '';
     export let rightContent = '';
+
+    let pages = []
+    
 </script>
 
 <style>
