@@ -2,6 +2,8 @@
     import { onMount } from 'svelte';
     import { browser } from '$app/environment';
     import TwoColumnLayout from '../components/TwoColumnLayout.svelte';
+    import Home from '../components/Home.svelte';
+    import About from '../components/About.svelte';
 
     let innerHeight;
     let innerWidth;
@@ -79,49 +81,26 @@
             };
         }
     });
+
+    let pages = [
+        { id: 'home', component: Home },
+        { id: 'about', component: About }
+    ];
+    let currentPage = pages[0];
+
+    function setPage(id) {
+        currentPage = pages.find(page => page.id === id);
+    }
+
 </script>
 
 <!-- Main HTML structure -->
 <div id="content-container">
-  <div class="terminal glowtext" >
-
-      <TwoColumnLayout>
-        <div slot="left">
-            <pre>
-    __   ____                      
-   / /__/_/ /_____  ____  ________ 
-  / / _/ / __/ __ `/ __ \/ ___/ _ \
- /   \/ / /_/ /_/ / /_/ / /  /  __/
-/_/|_/_/\__/\__  /\____/_/   \___/ 
-           /____/                  
-            </pre>
-            <pre class="size2">
-   developer / creative
-
-         ♥ ♦ Ü  
-     ∭ ⌛ ∞ ♡ 
-
-   about
-
-   projects 
-
-   design
-            </pre>
-            <img src="cat.png" alt="bubble" class="bubble" /> 
-            <img src="cat.png" alt="bubble" class="bubble" />  
-            <img src="cat.png" alt="bubble" class="bubble" />   
-            <a class="link" href="#">test</a>
-            <a class="link" href="#">test</a>
+    {#if currentPage}
+        <div class="terminal glowtext" >
+            <svelte:component this={currentPage.component} />
         </div>
-        <div slot="right">
-            <!-- Content for the right column -->
-            <pre class="size2">
-    bruhbruh
-    bru bruhbruh bruh bruh 
-            </pre>
-        </div>
-    </TwoColumnLayout>
-  </div>
+    {/if}
 </div>
 
 
@@ -131,7 +110,7 @@
     <defs>
         <filter id="motion-blur-filter" x="-50%" y="-50%" width="200%" height="200%">
             <feImage xlink:href="bubble.png" result="map" x="-50%" y="-55%" width="200%" height="200%" preserveAspectRatio="none"/>
-            <feDisplacementMap in="SourceGraphic" in2="map" scale=35 xChannelSelector="R" yChannelSelector="G" result="fisheye"/>
+            <feDisplacementMap in="SourceGraphic" in2="map" scale=40 xChannelSelector="R" yChannelSelector="G" result="fisheye"/>
 
             <feGaussianBlur in="fisheye" stdDeviation="30 .2" result="blur"/>
       
