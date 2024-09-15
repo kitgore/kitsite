@@ -1,40 +1,22 @@
-<script>
-    import TwoColumnLayout from './TwoColumnLayout.svelte';
-</script>
-
-<TwoColumnLayout>
-    <div slot="left">
+<div>
     <pre>
-    __   ____                      
-   / /__/_/ /_____  ____  ________ 
-  / / _/ / __/ __ `/ __ \/ ___/ _ \
- /   \/ / /_/ /_/ / /_/ / /  /  __/
-/_/|_/_/\__/\__  /\____/_/   \___/ 
-       /____/                  
+             .==-.                   .-==.
+              \()8`-._  `.   .'  _.-'8()/
+              (88"   ::.  \./  .::   "88)
+               \_.'`-::::.(#).::::-'`._/
+                 `._... .q(_)p. ..._.'
+                   ""-..-'|=|`-..-""
+                   .""' .'|=|`. `"".
+                 ,':8(o)./|=|\.(o)8:`.
+                (O :8 ::/ \_/ \:: 8: O)
+                 \O `::/       \::' O/
+                  ""--'         `--""   
     </pre>
-    <pre class="size2">
-developer / creative
+</div>
 
-        ♥ ♦ Ü  
-    ∭ ⌛ ∞ ♡ 
-
- about
-
- projects 
-
- design
-        </pre>
-        <img src="cat.png" alt="bubble" class="bubble" /> 
-        <img src="cat.png" alt="bubble" class="bubble" />  
-        <img src="cat.png" alt="bubble" class="bubble" />   
-        <a class="link" href="#">test</a>
-        <a class="link" href="#">test</a>
-    </div>
-    <div slot="right">
-        <!-- Content for the right column -->
-        <pre class="size2">
-bruhbruh
-bru bruhbruh bruh bruh 
-        </pre>
-    </div>
-</TwoColumnLayout>
+<style>
+    pre{
+        font-size: calc(var(--base-font-size2) * var(--font-size-scale));
+        line-height: 1.2;
+    }
+</style>

@@ -18,7 +18,16 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-	filter: url(#motion-blur-filter)
+	/* filter: url(#motion-blur-filter) */
+}
+
+#content-container{
+    filter: url(#motion-blur-filter);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .link {

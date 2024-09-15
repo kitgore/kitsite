@@ -3,7 +3,6 @@
     import { browser } from '$app/environment';
     import TwoColumnLayout from '../components/TwoColumnLayout.svelte';
     import Home from '../components/Home.svelte';
-    import About from '../components/About.svelte';
 
     let innerHeight;
     let innerWidth;
@@ -22,37 +21,35 @@
         const baseWidth = 1920;  
         const scaleFactor = Math.min(height / baseHeight, width / baseWidth);
         
-        // Update CSS custom property for general scaling
         document.documentElement.style.setProperty('--scale-factor', scaleFactor.toString());
 
         // Update SVG filter parameters
-        const filter = document.getElementById('motion-blur-filter');
-        if (filter) {
-            // Scale the displacement map (feImage)
-            const displacementMap = filter.querySelector('#displacement-map');
-            if (displacementMap) {
-                const mapWidth = 200 * scaleFactor;
-                const mapHeight = 200 * scaleFactor;
-                displacementMap.setAttribute('width', `${mapWidth}%`);
-                displacementMap.setAttribute('height', `${mapHeight}%`);
-                displacementMap.setAttribute('x', `-${mapWidth / 2}%`);
-                displacementMap.setAttribute('y', `-${mapHeight / 2 + 5}%`);
-            }
+        requestAnimationFrame(() => {
+            const filter = document.getElementById('motion-blur-filter');
+            if (filter) {
+                const displacementMap = filter.querySelector('#displacement-map');
+                if (displacementMap) {
+                    const mapWidth = 200 * scaleFactor;
+                    const mapHeight = 200 * scaleFactor;
+                    displacementMap.setAttribute('width', `${mapWidth}%`);
+                    displacementMap.setAttribute('height', `${mapHeight}%`);
+                    displacementMap.setAttribute('x', `-${mapWidth / 2}%`);
+                    displacementMap.setAttribute('y', `-${mapHeight / 2 + 5}%`);
+                }
 
-            // Scale the displacement effect (feDisplacementMap)
-            const displacementEffect = filter.querySelector('#displacement-effect');
-            if (displacementEffect) {
-                const newScale = 35 * scaleFactor;
-                displacementEffect.setAttribute('scale', newScale.toString());
-            }
+                const displacementEffect = filter.querySelector('#displacement-effect');
+                if (displacementEffect) {
+                    const newScale = 35 * scaleFactor;
+                    displacementEffect.setAttribute('scale', newScale.toString());
+                }
 
-            // Scale the blur effect
-            const blurEffect = filter.querySelector('#blur-effect');
-            if (blurEffect) {
-                const newBlur = `${30 * scaleFactor} ${0.2 * scaleFactor}`;
-                blurEffect.setAttribute('stdDeviation', newBlur);
+                const blurEffect = filter.querySelector('#blur-effect');
+                if (blurEffect) {
+                    const newBlur = `${30 * scaleFactor} ${0.2 * scaleFactor}`;
+                    blurEffect.setAttribute('stdDeviation', newBlur);
+                }
             }
-        }
+        });
     }
 
     function updateFontSize(height) {
@@ -83,8 +80,7 @@
     });
 
     let pages = [
-        { id: 'home', component: Home },
-        { id: 'about', component: About }
+        { id: 'twoColumn', component: TwoColumnLayout }
     ];
     let currentPage = pages[0];
 
@@ -94,14 +90,21 @@
 
 </script>
 
+
+
 <!-- Main HTML structure -->
+<video class="background-video" autoplay loop muted>
+    <source src="CEVnoise8.mp4" type="video/mp4">
+</video>
 <div id="content-container">
-    {#if currentPage}
-        <div class="terminal glowtext" >
+    <div class="terminal glowtext" >
+        {#if currentPage}
             <svelte:component this={currentPage.component} />
-        </div>
-    {/if}
+        {/if}
+    </div>
 </div>
+
+
 
 
 
@@ -151,8 +154,7 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        background-color: black;
-        background-image: url("CEVnoise4.gif");
+        /* background-color: black; */
         color: white;
         font-family: 'bigBlue', monospace;
         font-size: calc(var(--base-font-size) * var(--font-size-scale));
@@ -160,7 +162,7 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-        filter: url(#motion-blur-filter)
+        /* filter: url(#motion-blur-filter) */
     }
 
     :global(pre) {
@@ -168,22 +170,6 @@
         padding: 0;
         font-family: 'bigBlue', monospace;
         font-size: calc(var(--base-font-size) * var(--font-size-scale));
-    }
-
-    .size2{
-        font-size: calc(var(--base-font-size2) * var(--font-size-scale));
-    }
-
-    .link {
-        color: white; /* Initial text color */
-        text-decoration: none; /* Remove underline */
-        transition: all 0s ease-out; /* Smooth transition */
-    }
-
-    .link:hover {
-        color: black; /* Text color on hover */
-        background-color: rgb(240, 250, 255); /* Background color on hover */
-        box-shadow: 0 0 10px rgb(165, 183, 243);
     }
 
     /* Terminal Text Container */
@@ -203,8 +189,15 @@
         text-shadow: 0px 0 5px rgb(145, 194, 237);
     }
 
-    .bubble {
-        width: calc(100px * var(--scale-factor));
-        height: auto;
-    }
+    .background-video {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: -1;
+    }   
 </style>
