@@ -27,22 +27,24 @@
            /____/                  
     </pre>
     <pre class="size2">
-developer / creative
+  developer / creative
+  
+         ♥ ♦ Ü  
+     ∭     ∭
+ ⌛ ∞ ♡ 
 
-        ♥ ♦ Ü  
-    ∭ ⌛ ∞ ♡ 
+ <a class="link" href="#" on:click={()=> setPage("about")}> about</a>
+ 
+ <a class="link" href="#" on:click={()=> setPage("home")}> projects </a>
 
- about
+ <a class="link" href="#" on:click={()=> setPage("design")}> design</a>
 
- projects 
-
- design
     </pre>
     <img src="cat.png" alt="bubble" class="bubble" /> 
     <img src="cat.png" alt="bubble" class="bubble" />  
     <img src="cat.png" alt="bubble" class="bubble" />   
-    <a class="link" href="#" on:click={()=> setPage("home")}>home</a>
-    <a class="link" href="#" on:click={()=> setPage("about")}>about</a>
+
+    
 </div>
 <div class="right-column">
     <!-- Content for the right column -->
@@ -83,15 +85,16 @@ developer / creative
         position: relative;
         display: inline-block;
         z-index: 1;
+        font-size: calc(var(--base-font-size2) * var(--font-size-scale));
     }
 
     .link::before {
         content: '';
         position: absolute;
-        top: 0em; /* Adjust these values to change the hitbox size */
+        top: 1em; /* Adjust these values to change the hitbox size */
         left: -1em;
         right: -1em;
-        bottom: -2em;
+        bottom: -1em;
         z-index: -1;
     }
 
