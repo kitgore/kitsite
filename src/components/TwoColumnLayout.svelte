@@ -1,16 +1,44 @@
 <script>
     import Home from './Home.svelte';
     import About from './About.svelte';
+    import { onMount, tick } from 'svelte';
 
     let pages = [
         { id: 'home', component: Home },
         { id: 'about', component: About }
     ];
-    let currentPage = pages[0]
-
-    function setPage(id) {
-        currentPage = pages.find(page => page.id === id)
+    let currentPage = pages[0];
+    let displayedAscii = currentPage.ascii;
+    let animating = false;
+    
+    async function setPage(id) {
+        if (animating) return;
+        animating = true;
+        
+        let targetPage = pages.find(page => page.id === id);
+        let targetAscii = targetPage.ascii;
+        
+        while (displayedAscii !== targetAscii) {
+            displayedAscii = animateAscii(displayedAscii, targetAscii);
+            await tick();
+            await new Promise(resolve => setTimeout(resolve, 50)); // Adjust speed here
+        }
+        
+        currentPage = targetPage;
+        animating = false;
     }
+    
+    function animateAscii(current, target) {
+        return current.split('').map((char, index) => {
+            if (char === target[index]) return char;
+            let currentCode = char.charCodeAt(0);
+            let targetCode = target[index].charCodeAt(0);
+            if (currentCode < targetCode) return String.fromCharCode(currentCode + 1);
+            if (currentCode > targetCode) return String.fromCharCode(currentCode - 1);
+            return char;
+        }).join('');
+    }
+
     
 </script>
 
@@ -28,7 +56,6 @@
     </pre>
     <pre class="size2">
   developer / creative
-  
          ♥ ♦ Ü  
      ∭     ∭
  ⌛ ∞ ♡ 
