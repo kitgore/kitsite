@@ -46,7 +46,7 @@
 
 <div class="container">
     <div class="left-column">
-    <pre>
+    <pre class="size1">
     __   ____                      
    / /__/_/ /_____  ____  ________ 
   / / _/ / __/ __ `/ __ \/ ___/ _ \
@@ -67,9 +67,9 @@
  <a class="link" href="#" on:click={()=> setPage("design")}> design</a>
 
     </pre>
-    <img src="cat.png" alt="bubble" class="bubble" /> 
+    <!-- <img src="cat.png" alt="bubble" class="bubble" /> 
     <img src="cat.png" alt="bubble" class="bubble" />  
-    <img src="cat.png" alt="bubble" class="bubble" />   
+    <img src="cat.png" alt="bubble" class="bubble" />    -->
 
     
 </div>
@@ -89,7 +89,7 @@
     }
     
     .left-column {
-        width: 33%;
+        width: 35%;
         padding-left: .4rem;
         box-sizing: border-box;
         border-right: 3px solid white;
@@ -100,35 +100,12 @@
         padding: 1rem;
         box-sizing: border-box;
     }
+    .size1{
+        font-size: calc(var(--base-font-size) * var(--font-size-scale));
+    }
 
     .size2{
         font-size: calc(var(--base-font-size2) * var(--font-size-scale));
-    }
-
-    .link {
-        color: white;
-        text-decoration: none;
-        transition: all 0s ease-out;
-        position: relative;
-        display: inline-block;
-        z-index: 1;
-        font-size: calc(var(--base-font-size2) * var(--font-size-scale));
-    }
-
-    .link::before {
-        content: '';
-        position: absolute;
-        top: 1em; /* Adjust these values to change the hitbox size */
-        left: -1em;
-        right: -1em;
-        bottom: -1em;
-        z-index: -1;
-    }
-
-    .link:hover {
-        color: black;
-        background-color: rgb(240, 250, 255);
-        box-shadow: 0 0 10px rgb(165, 183, 243);
     }
     .bubble {
         width: calc(100px * var(--scale-factor));

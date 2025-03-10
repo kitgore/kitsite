@@ -404,4 +404,20 @@
         bottom: 0;
         z-index: -1;
     }
+
+    :global(.link) {
+        color: rgb(var(--text-color));
+        text-decoration: none;
+        transition: color 50ms ease-out, background-color 50ms ease-out;
+        position: relative;
+        display: inline-block;
+        z-index: 1;
+        font-size: calc(var(--base-font-size2) * var(--font-size-scale));
+    }
+
+    :global(.link:hover) {
+        color: black;
+        background-color: rgb(var(--text-color));
+        text-shadow: 0 0 calc(5px * var(--glow-intensity)) rgb(145, 194, 237);
+    }
 </style>
