@@ -1,11 +1,13 @@
 <script>
     import Home from './Home.svelte';
     import About from './About.svelte';
+    import Projects from './Projects.svelte';
     import { onMount, tick } from 'svelte';
 
     let pages = [
         { id: 'home', component: Home },
-        { id: 'about', component: About }
+        { id: 'about', component: About },
+        { id: 'projects', component: Projects }
     ];
     let currentPage = pages[0];
     let displayedAscii = currentPage.ascii;
@@ -62,7 +64,7 @@
 
  <a class="link" href="#" on:click={()=> setPage("about")}> about</a>
  
- <a class="link" href="#" on:click={()=> setPage("home")}> projects </a>
+ <a class="link" href="#" on:click={()=> setPage("projects")}> projects </a>
 
  <a class="link" href="#" on:click={()=> setPage("design")}> design</a>
 

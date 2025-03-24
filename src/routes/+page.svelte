@@ -341,6 +341,21 @@
         transition: color 50ms ease-out;
     }
 
+    :global([style*="border-color: white"]), :global([style*="border-color:#fff"]), :global([style*="border-color: #ffffff"]) {
+        border-color: rgb(var(--border-color)) !important;
+        transition: border-color 50ms ease-out;
+    }
+
+    :global([style*="fill: white"]), :global([style*="fill:#fff"]), :global([style*="fill: #ffffff"]) {
+        fill: rgb(var(--text-color)) !important;
+        transition: fill 50ms ease-out;
+    }
+
+    :global([style*="background-color: white"]), :global([style*="background-color:#fff"]), :global([style*="background-color: #ffffff"]) {
+        background-color: rgb(var(--text-color)) !important;
+        transition: background-color 50ms ease-out;
+    }
+
     :global(:root) {
         --base-font-size: 18px;
         --base-font-size2: 24px;
@@ -418,6 +433,6 @@
     :global(.link:hover) {
         color: black;
         background-color: rgb(var(--text-color));
-        text-shadow: 0 0 calc(5px * var(--glow-intensity)) rgb(145, 194, 237);
+        box-shadow: 0 0 calc(5px * var(--glow-intensity)) rgb(145, 194, 237);
     }
 </style>
