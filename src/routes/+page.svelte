@@ -324,7 +324,7 @@
     }
 
     /* Make sure all text elements transition color */
-    :global(pre), :global(p), :global(span), :global(h1), :global(h2), :global(h3), :global(h4), :global(h5), :global(h6), :global(div) {
+    :global(pre), :global(p), :global(span), :global(h1), :global(h2), :global(h3), :global(h4), :global(h5), :global(h6), :global(div), :global(.ascii-art) {
         transition: color 50ms ease-out;
         color: rgb(var(--text-color));
     }
@@ -336,7 +336,7 @@
     }
     
     /* Handle any elements with explicit white color */
-    :global([style*="color: white"]), :global([style*="color:#fff"]), :global([style*="color: #ffffff"]) {
+    :global([style*="color: white"]), :global([style*="color:#fff"]), :global([style*="color: #ffffff"]), :global(.ascii-art) {
         color: rgb(var(--text-color)) !important;
         transition: color 50ms ease-out;
     }
@@ -386,6 +386,13 @@
         padding: 0;
         font-family: 'bigBlue', monospace;
         font-size: calc(var(--base-font-size) * var(--font-size-scale));
+    }
+
+    :global(.ascii-art) {
+        font-family: 'bigBlue', monospace !important;
+        color: rgb(var(--text-color)) !important;
+        text-shadow: 0 0 calc(5px * var(--glow-intensity)) rgb(145, 194, 237) !important;
+        transition: text-shadow 50ms ease-out, color 50ms ease-out !important;
     }
 
     /* Terminal Text Container */
