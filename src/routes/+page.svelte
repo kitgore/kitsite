@@ -3,11 +3,12 @@
     import { browser } from '$app/environment';
     import TwoColumnLayout from '../components/TwoColumnLayout.svelte';
     import Home from '../components/Home.svelte';
+    import { fontSizeScale } from '../components/store';
+    import { get, writable } from 'svelte/store';
 
     let innerHeight;
     let innerWidth;
     let baseFontSize = 20; // Base font size in pixels
-    let fontSizeScale;
     let blurAmount = 0;
     let glowIntensity = 1; // Base intensity multiplier
     let isFlickering = false;
@@ -62,10 +63,10 @@
         if (!browser) return;
 
         const baseHeight = 1080; // Base height for scaling (e.g., 1080p)
-        fontSizeScale = height / baseHeight;
+        $fontSizeScale = height / baseHeight;
         
         // Update CSS custom property for font size scaling
-        document.documentElement.style.setProperty('--font-size-scale', fontSizeScale.toString());
+        document.documentElement.style.setProperty('--font-size-scale', get(fontSizeScale).toString());
     }
 
     function createFlickerBurst(timestamp) {

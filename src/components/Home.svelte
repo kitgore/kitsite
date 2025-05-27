@@ -10,7 +10,13 @@
         height={18}
     />
     <div class="center-text">
-        <h1>Welcome to my website</h1>
+        <p>Welcome to my website</p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p class="center-text">This site is part of the M0SS webring</p>
     </div>
 </div>
 

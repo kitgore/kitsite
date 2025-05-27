@@ -132,7 +132,7 @@
 {frames[currentFrame]}
 </pre>
     {:else}
-        <div class="error">No frames loaded</div>
+        <!-- <div class="error">No frames loaded</div> -->
     {/if}
 </div>
 

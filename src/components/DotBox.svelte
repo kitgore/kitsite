@@ -1,13 +1,20 @@
 <script>
   import { onMount, onDestroy, afterUpdate } from 'svelte';
+  import { get } from 'svelte/store'
+  import { fontSizeScale } from './store';
   
-  export let containerWidth = '90%';
-  export let dotSize = 28;
-  export let padding = 35;
+  export let containerWidth = '99%';
+  export let dotSizeInput = 40;
+  export let paddingInput = 50;
+  export let heightRatio = .9;
   
   let container;
   let content;
   let resizeObserver;
+  $: dotSize = $fontSizeScale * dotSizeInput;
+  $: padding = $fontSizeScale * paddingInput
+
+  $: console.log("PADDING: ", padding)
   
   function createDotBorder() {
     if (!container || !content) return;
@@ -19,7 +26,7 @@
     const width = rect.width;
     // const contentHeight = content.scrollHeight;
     // const height = contentHeight + (padding * 2);
-    const height = rect.height;
+    const height = rect.height  * heightRatio;
     
     container.style.height = `${height}px`;
     
@@ -29,7 +36,7 @@
     
     for (let i = 0; i < horizontalDots; i++) {
       const x = i * stepX;
-      createDot(x, 0); // Top
+      createDot(x, (dotSize - dotSize * heightRatio)); // Top
       createDot(x, height - dotSize); // Bottom
     }
     

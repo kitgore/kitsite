@@ -49,20 +49,22 @@
 <div class="container">
     <div class="left-column">
     <pre class="size1">
-    __   ____                      
-   / /__/_/ /_____  ____  ________ 
-  / / _/ / __/ __ `/ __ \/ ___/ _ \
- /   \/ / /_/ /_/ / /_/ / /  /  __/
-/_/|_/_/\__/\__  /\____/_/   \___/ 
-           /____/                  
+     __   ____                      
+    / /__/_/ /_____  ____  ________ 
+   / / _/ / __/ __ `/ __ \/ ___/ _ \
+  /   \/ / /_/ /_/ / /_/ / /  /  __/
+ /_/|_/_/\__/\__  /\____/_/   \___/ 
+            /____/                  
     </pre>
     <pre class="size2">
-  developer / creative
-         ♥ ♦ Ü  
+    developer / creative
+ 
+   ♥ Ü     ∭    
+ <!--         ♥ ♦ Ü  
      ∭     ∭
- ⌛ ∞ ♡ 
+ ⌛ ∞ ♡  -->
 
- <a class="link" href="#" on:click={()=> setPage("about")}> about</a>
+ <a class="link" href="#" on:click={()=> setPage("home")}> about</a>
  
  <a class="link" href="#" on:click={()=> setPage("projects")}> projects </a>
 
