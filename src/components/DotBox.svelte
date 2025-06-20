@@ -4,17 +4,21 @@
   import { fontSizeScale } from './store';
   
   export let containerWidth = '99%';
-  export let dotSizeInput = 40;
-  export let paddingInput = 50;
-  export let heightRatio = .9;
+  export let dotSizeInput = 25;
+  export let horizontalPadding = 50;  // Renamed from paddingInput to be more explicit
+  export let topPadding = 50;         // New parameter for top content padding
+  export let bottomPadding = 1;     // Renamed from bottomRatio and adjusted for actual padding
+  export let topMargin = 0;
+  export let bottomMargin = 0;
+  export let isFirst = false;
   
   let container;
   let content;
   let resizeObserver;
   $: dotSize = $fontSizeScale * dotSizeInput;
-  $: padding = $fontSizeScale * paddingInput
-
-  $: console.log("PADDING: ", padding)
+  $: scaledHorizontalPadding = $fontSizeScale * horizontalPadding;
+  $: scaledTopPadding = $fontSizeScale * topPadding;
+  $: scaledBottomPadding = $fontSizeScale * bottomPadding;
   
   function createDotBorder() {
     if (!container || !content) return;
@@ -22,35 +26,37 @@
     const oldDots = container.querySelectorAll('.dot');
     oldDots.forEach(dot => dot.remove());
     
+    const contentRect = content.getBoundingClientRect();
+    const baseHeight = contentRect.height + scaledTopPadding + scaledBottomPadding;
+    
     const rect = container.getBoundingClientRect();
     const width = rect.width;
-    // const contentHeight = content.scrollHeight;
-    // const height = contentHeight + (padding * 2);
-    const height = rect.height  * heightRatio;
     
-    container.style.height = `${height}px`;
-    
-    // Calculate horizontal dots for top/bottom
+    // Calculate spacing based on horizontal dots
     const horizontalDots = Math.ceil((width - dotSize) / dotSize) + 1;
-    const stepX = (width - dotSize) / (horizontalDots - 1);
+    const dotSpacing = (width - dotSize) / (horizontalDots - 1);
     
+    // Calculate how many vertical dots we need and adjust height to make spacing perfect
+    const verticalDots = Math.ceil((baseHeight - dotSize) / dotSpacing);
+    const adjustedHeight = (verticalDots - 1) * dotSpacing + dotSize;
+    
+    container.style.height = `${adjustedHeight}px`;
+    content.style.marginTop = `-${isFirst ? 0 : dotSpacing}px`
+    
+    // Place horizontal dots
     for (let i = 0; i < horizontalDots; i++) {
-      const x = i * stepX;
-      createDot(x, (dotSize - dotSize * heightRatio)); // Top
-      createDot(x, height - dotSize); // Bottom
+        const x = i * dotSpacing;
+        if (isFirst){
+          createDot(x, 0);
+        }
+        createDot(x, adjustedHeight - dotSize);
     }
     
-    // Calculate vertical dots for left/right
-    const availableVerticalSpace = height - 2 * dotSize;
-    if (availableVerticalSpace > 0) {
-      const verticalDots = Math.ceil(availableVerticalSpace / dotSize);
-      const stepY = availableVerticalSpace / verticalDots;
-      
-      for (let i = 0; i < verticalDots; i++) {
-        const y = dotSize + (i * stepY);
-        createDot(0, y); // Left
-        createDot(width - dotSize, y); // Right
-      }
+    // Place vertical dots
+    for (let i = 1; i < verticalDots; i++) {
+        const y = i * dotSpacing;
+        createDot(0, y);
+        createDot(width - dotSize, y);
     }
   }
   
@@ -86,19 +92,15 @@
   });
 </script>
 
-<div class="container-wrapper" style="width: {containerWidth};">
+<div class="container-wrapper" style="width: {containerWidth}; margin-top: {topMargin}px; margin-bottom: {bottomMargin}px;">
 <div class="container" bind:this={container}>
-  <div class="content" bind:this={content} style="padding: {padding}px;">
+  <div class="content" bind:this={content} style="padding: {scaledTopPadding}px {scaledHorizontalPadding}px {scaledBottomPadding}px {scaledHorizontalPadding}px;">
     <slot></slot>
   </div>
 </div>
 </div>
 
 <style>
-  .container-wrapper {
-    margin-top: -1%;
-  }
-  
   .container {
     position: relative;
     height: auto;

@@ -3,6 +3,9 @@
 </script>
 
 <div>
+    <br>
+    <br>
+    <br>
     <AsciiPlayer 
         src="/danceascii.txt"
         fps={20}
@@ -10,13 +13,24 @@
         height={18}
     />
     <div class="center-text">
-        <p>Welcome to my website</p>
+        <br>
+        <br>
+        <p>welcome to my website</p>
+        <p></p>
         <br>
         <br>
         <br>
         <br>
         <br>
-        <p class="center-text">This site is part of the M0SS webring</p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p class="center-text">this site is part of the <a class="link underline" href="#" on:click={() => {}}>M0SS</a> webring</p>
+        <p class="center-text">
+            <a class="link underline" href="#" on:click={() => {}}>prev</a> 
+            <a class="link underline" href="#" on:click={() => {}}>next</a> 
+        </p>
     </div>
 </div>
 

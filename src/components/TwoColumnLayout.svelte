@@ -60,9 +60,9 @@
     developer / creative
  
    ♥ Ü     ∭    
- <!--         ♥ ♦ Ü  
+         ♥ ♦ Ü  
      ∭     ∭
- ⌛ ∞ ♡  -->
+ ⌛ ∞ ♡ 
 
  <a class="link" href="#" on:click={()=> setPage("home")}> about</a>
  
@@ -96,13 +96,18 @@
         width: 35%;
         padding-left: .4rem;
         box-sizing: border-box;
-        border-right: 3px solid white;
+        border-right: 3px solid rgb(var(--border-color));
+        transition: border-color 50ms ease-out;
     }
     
     .right-column {
         width: 67%;
-        padding: 1rem;
         box-sizing: border-box;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
     }
     .size1{
         font-size: calc(var(--base-font-size) * var(--font-size-scale));

@@ -8,7 +8,7 @@
 
     let innerHeight;
     let innerWidth;
-    let baseFontSize = 20; // Base font size in pixels
+    let baseFontSize = 1.15; // Base font size in pixels
     let blurAmount = 0;
     let glowIntensity = 1; // Base intensity multiplier
     let isFlickering = false;
@@ -18,7 +18,7 @@
 
     $: if (browser) {
         updateFilterScaling(innerHeight, innerWidth);
-        updateFontSize(innerHeight);
+        updateFontSize(innerWidth);
     }
 
     function updateFilterScaling(height, width) {
@@ -59,11 +59,11 @@
         });
     }
 
-    function updateFontSize(height) {
+    function updateFontSize(width) {
         if (!browser) return;
 
-        const baseHeight = 1080; // Base height for scaling (e.g., 1080p)
-        $fontSizeScale = height / baseHeight;
+        const baseWidth = 1920; // Base height for scaling (e.g., 1080p)
+        $fontSizeScale = width * baseFontSize / baseWidth;
         
         // Update CSS custom property for font size scaling
         document.documentElement.style.setProperty('--font-size-scale', get(fontSizeScale).toString());
@@ -182,12 +182,17 @@
         // Update glow intensity
         document.documentElement.style.setProperty('--glow-intensity', intensity.toString());
         
-        // Update text and border colors
-        document.documentElement.style.setProperty('--text-color', `${colorValue}, ${colorValue}, ${colorValue}`);
-        document.documentElement.style.setProperty('--border-color', `${colorValue}, ${colorValue}, ${colorValue}`);
+        // Make the color change more dramatic for flickers
+        const adjustedColorValue = Math.max(0, Math.min(255, colorValue * 0.7));
         
+        // Update text and border colors
+        document.documentElement.style.setProperty('--text-color', `${adjustedColorValue}, ${adjustedColorValue}, ${adjustedColorValue}`);
+        document.documentElement.style.setProperty('--border-color', `${adjustedColorValue}, ${adjustedColorValue}, ${adjustedColorValue}`);
+        
+        document.documentElement.style.setProperty('--image-brightness', `${intensity * 100}%`);
+
         // Update SVG elements if any
-        updateSvgColors(colorValue);
+        updateSvgColors(adjustedColorValue);
     }
     
     // Function to update the global glow intensity
@@ -336,6 +341,13 @@
         border-color: rgb(var(--border-color));
     }
     
+    /* Global image darkening during flicker */
+    :global(img) {
+        transition: filter 50ms ease-out;
+        filter: brightness(var(--image-brightness)) drop-shadow(0 0 calc(7px * var(--glow-intensity)) #4C728A);
+        mix-blend-mode: multiply;
+    }
+    
     /* Handle any elements with explicit white color */
     :global([style*="color: white"]), :global([style*="color:#fff"]), :global([style*="color: #ffffff"]), :global(.ascii-art) {
         color: rgb(var(--text-color)) !important;
@@ -358,8 +370,8 @@
     }
 
     :global(:root) {
-        --base-font-size: 18px;
-        --base-font-size2: 24px;
+        --base-font-size: 15px;
+        --base-font-size2: 20px;
         --font-size-scale: 1;
         --scale-factor: 1;
         --glow-intensity: 1; /* Glow intensity control */
@@ -374,7 +386,7 @@
         /* background-color: black; */
         color: white;
         font-family: 'bigBlue', monospace;
-        font-size: calc(var(--base-font-size) * var(--font-size-scale));
+        font-size: calc(var(--base-font-size2) * var(--font-size-scale));
         display: flex;
         justify-content: center;
         align-items: center;
@@ -394,12 +406,13 @@
         color: rgb(var(--text-color)) !important;
         text-shadow: 0 0 calc(5px * var(--glow-intensity)) rgb(145, 194, 237) !important;
         transition: text-shadow 50ms ease-out, color 50ms ease-out !important;
+        font-size: calc(var(--base-font-size2) * var(--font-size-scale));
     }
 
     /* Terminal Text Container */
     .terminal {
-        width: 80vw;
-        height: 85vh;
+        width: 90vw;
+        height: 87vh;
         border: 3px solid rgb(var(--border-color));
         padding: 0px;
         box-sizing: border-box;
@@ -442,5 +455,9 @@
         color: black;
         background-color: rgb(var(--text-color));
         box-shadow: 0 0 calc(5px * var(--glow-intensity)) rgb(145, 194, 237);
+    }
+
+    :global(.underline) {
+        text-decoration: underline;
     }
 </style>
