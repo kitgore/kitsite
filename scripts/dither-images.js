@@ -7,7 +7,7 @@ import { dirname } from 'path';
 // Color configuration
 const DITHER_COLORS = {
     dark: '#013B42',   // Dark teal
-    light: '#DCF9FF'   // Light blue
+    light: '#ABB6BF'   // Light blue
 };
 
 // Blur amount (pixels)

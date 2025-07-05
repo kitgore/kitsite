@@ -18,14 +18,6 @@
         <p>welcome to my website</p>
         <p></p>
         <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
         <p class="center-text">this site is part of the <a class="link underline" href="#" on:click={() => {}}>M0SS</a> webring</p>
         <p class="center-text">
             <a class="link underline" href="#" on:click={() => {}}>prev</a> 

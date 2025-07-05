@@ -25,7 +25,7 @@
         <img src="dithered/codagotchi3.png" alt="codagotchi" class="project-image">
     </div>
     <div class="header-container">
-        <p class="title">Codagotchi</p>
+        <p class="title">codagotchi</p>
         <span class="badge">SVELTE</span>
         <span class="badge">TYPESCRIPT</span>
         <span class="badge">FIREBASE</span>
@@ -75,52 +75,42 @@
     .dotBoxContainer{
         height: 100%;
         overflow-y: auto;
-        scrollbar-width: thin;
+        scrollbar-width: none; /* Hide scrollbar for Firefox */
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
         width: 100%;
         align-items: center;
         padding-bottom: 3%;
+        padding-left: 1%;
+        padding-right: 1%;
+        padding-top: 1%;
     }
 
-    /* Custom scrollbar styling for webkit browsers */
+    /* Hide scrollbar for webkit browsers */
     .dotBoxContainer::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .dotBoxContainer::-webkit-scrollbar-track {
-        background: transparent;
-    }
-
-    .dotBoxContainer::-webkit-scrollbar-thumb {
-        background-color: rgba(var(--text-color), 0.6);
-        border-radius: 4px;
-        transition: background-color 50ms ease-out;
-    }
-
-    .dotBoxContainer::-webkit-scrollbar-thumb:hover {
-        background-color: rgba(var(--text-color), 0.8);
+        display: none;
     }
 
     .project-image {
         max-height: calc(14em * var(--font-size-scale));
-        max-width: 100%;
-        width: auto;
         height: auto;
         object-fit: contain;
         transition: filter 50ms ease-out;
         position: relative;
         z-index: 1;
+        flex: 1;
+        min-width: 0; /* Prevents flex items from overflowing */
     }
 
     .image-group {
         display: flex;
         gap: 1em;
-        margin: 1em 0;
+        margin: .25em 0;
         position: relative;
         z-index: 1;
-        justify-content: flex-start;
+        justify-content: stretch;
         align-items: flex-start;
+        width: 100%;
     }
 </style>
