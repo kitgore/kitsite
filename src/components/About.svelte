@@ -1,22 +1,12 @@
-<div>
-    <pre>
-             .==-.                   .-==.
-              \()8`-._  `.   .'  _.-'8()/
-              (88"   ::.  \./  .::   "88)
-               \_.'`-::::.(#).::::-'`._/
-                 `._... .q(_)p. ..._.'
-                   ""-..-'|=|`-..-""
-                   .""' .'|=|`. `"".
-                 ,':8(o)./|=|\.(o)8:`.
-                (O :8 ::/ \_/ \:: 8: O)
-                 \O `::/       \::' O/
-                  ""--'         `--""   
-    </pre>
+<div class="about-container">
+    hi my name is ben i'm a software engineer and designer.
+    
 </div>
 
 <style>
-    pre{
-        font-size: calc(var(--base-font-size2) * var(--font-size-scale));
-        line-height: 1.2;
+    .about-container {
+        width: 100%;
+        height: 100%;
+        padding: 10%;
     }
 </style>

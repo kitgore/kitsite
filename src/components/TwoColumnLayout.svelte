@@ -64,11 +64,11 @@
      ∭     ∭
  ⌛ ∞ ♡ 
 
- <a class="link" href="#" on:click={()=> setPage("home")}> about</a>
+ <a class="link" href="#" on:click={()=> setPage("home")}> home</a>
  
  <a class="link" href="#" on:click={()=> setPage("projects")}> projects </a>
 
- <a class="link" href="#" on:click={()=> setPage("design")}> design</a>
+ <a class="link" href="#" on:click={()=> setPage("about")}> about</a>
 
     </pre>
     <!-- <img src="cat.png" alt="bubble" class="bubble" /> 
